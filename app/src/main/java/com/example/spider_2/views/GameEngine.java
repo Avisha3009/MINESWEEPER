@@ -2,7 +2,6 @@ package com.example.spider_2.views;
 
 
 
-import android.app.Activity;
 import android.content.Context;
 
 import android.os.Vibrator;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 
 import com.example.spider_2.grid.Cell;
 
-public class GameEngine extends Activity {
+public class GameEngine  {
     private static GameEngine instance;
 
     public static final int BOMB_NUMBER = 10;
@@ -86,11 +85,11 @@ public class GameEngine extends Activity {
         int notRevealed = WIDTH * HEIGHT;
         for ( int x = 0 ; x < WIDTH ; x++ ){
             for( int y = 0 ; y < HEIGHT ; y++ ){
-                if( getCellAt(x,y).isRevealed()  ){
+                if( getCellAt(x,y).isRevealed() || getCellAt(x,y).isFlagged() ){
                     notRevealed--;
                 }
 
-                if( getCellAt(x,y).isBomb() ){
+                if( getCellAt(x,y).isFlagged() && getCellAt(x,y).isBomb() ){
                     bombNotFound--;
                 }
             }
@@ -103,7 +102,11 @@ public class GameEngine extends Activity {
         return false;
     }
 
-
+    public void flag( int x , int y ){
+        boolean isFlagged = getCellAt(x,y).isFlagged();
+        getCellAt(x,y).setFlagged(!isFlagged);
+        getCellAt(x,y).invalidate();
+    }
 
     private void onGameLost(){
         // handle lost game

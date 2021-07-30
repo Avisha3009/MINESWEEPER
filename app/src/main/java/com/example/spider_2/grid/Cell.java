@@ -14,7 +14,7 @@ import com.example.spider_2.R;
 import com.example.spider_2.views.GameEngine;
 
 
-public class Cell extends BaseCell implements View.OnClickListener {
+public class Cell extends BaseCell implements View.OnClickListener , View.OnLongClickListener{
 
     public Cell( Context context , int x , int y ){
         super(context);
@@ -22,7 +22,7 @@ public class Cell extends BaseCell implements View.OnClickListener {
         setPosition(x,y);
 
         setOnClickListener(this);
-
+        setOnLongClickListener(this);
     }
 
     @Override
@@ -35,6 +35,12 @@ public class Cell extends BaseCell implements View.OnClickListener {
         GameEngine.getInstance().click( getXPos(), getYPos() );
     }
 
+    @Override
+    public boolean onLongClick(View v) {
+        GameEngine.getInstance().flag( getXPos() , getYPos() );
+
+        return true;
+    }
 
 
     @Override
